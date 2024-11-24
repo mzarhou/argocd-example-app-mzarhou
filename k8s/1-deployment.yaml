@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
       - name: playground-app
-        image: wil42/playground:v1
+        image: mzarhou/nginx:v0.1.0
         ports:
-        - containerPort: 8888
+        - containerPort: 80
 
 ---
 apiVersion: v1
@@ -32,4 +32,4 @@ spec:
   ports:
     - protocol: TCP
       port: 8888
-      targetPort: 8888
+      targetPort: 80
