@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playground-app
+  namespace: bar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playground-app
+  template:
+    metadata:
+      labels:
+        app: playground-app
+    spec:
+      containers:
+      - name: playground-app
+        image: mzarhou/nginx:v0.1.1
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: playground-service
+  namespace: bar
+spec:
+  selector:
+    app: playground-app
+  ports:
+    - protocol: TCP
+      port: 8888
+      targetPort: 80

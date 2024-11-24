@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: second-app
+  namespace: argocd # namespace to create application object, don't confuse with a target namespace
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default # provide a logical grouping of applications, useful when argocd is used by multiple teams
+  source:
+    repoURL: https://github.com/mzarhou/argocd-example-app.git
+    targetRevision: HEAD # branch, tag, commit
+    path: environments/staging/second-app
+  destination: # useful when argocd is used by multiple clusters
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true # remove resources that are not in the git repository
+      selfHeal: true # reapply resources that are not in the desired state
+    syncOptions:
+      - Validate=true # validate the resources before applying them
+      - CreateNamespace=false # don't create the namespace if it doesn't exist
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
