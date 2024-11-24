@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: playground-app
-        image: mzarhou/nginx:v0.1.0
+        image: mzarhou/nginx:v0.1.1
         ports:
         - containerPort: 80
 
